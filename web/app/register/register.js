@@ -8,8 +8,9 @@ angular.module('myApp.register', ['ngRoute'])
   });
 }])
 
-.controller('registerController', ["InfoFactory","InfoService","$http","$window","$location",function(InfoFactory,InfoService,$http,$window,$location) {
+.controller('registerController', ["InfoFactory","InfoService","$http","$window","$location","loginService",function(InfoFactory,InfoService,$http,$window,$location,loginService) {
   var self = this;
+  this.loginService = loginService;
 
   function url_base64_decode(str) {
     var output = str.replace('-', '+').replace('_', '/');
@@ -33,17 +34,17 @@ angular.module('myApp.register', ['ngRoute'])
             .post('api/register', self.user)
             .success(function (data, status, headers, config) {
               $window.sessionStorage.token = data.token;
-              self.isAuthenticated = true;
+              loginService.isAuthenticated = true;
               var encodedProfile = data.token.split('.')[1];
               var profile = JSON.parse(url_base64_decode(encodedProfile));
-              self.username = profile.username;
+              loginService.username = profile.username;
               var roles = profile.roles.split(",");
               roles.forEach(function (role) {
                 if(role === "Admin"){
-                   self.isAdmin =true;
+                   loginService.isAdmin =true;
                  }
                 if(role === "User"){
-                   self.isUser = true;
+                   loginService.isUser = true;
                  }
               });
               self.error = null;
@@ -52,10 +53,10 @@ angular.module('myApp.register', ['ngRoute'])
             .error(function (data, status, headers, config) {
               // Erase the token if the user fails to log in
               delete $window.sessionStorage.token;
-              self.isAuthenticated = false;
-              self.isAdmin = false;
-              self.isUser = false;
-              self.username = "";
+              loginService.isAuthenticated = true;
+              loginService.isAdmin = false;
+              loginService.isUser = false;
+              loginService.username = "";
               self.error = data.error;
               //self.logout();  //Clears an eventual error message from timeout on the inner view
             });

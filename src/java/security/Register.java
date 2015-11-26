@@ -69,7 +69,7 @@ public class Register {
         
         JsonObject loginJson = new JsonObject();
         loginJson.addProperty("username", username);
-        loginJson.addProperty("password", password);
+        loginJson.addProperty("password", password); 
         
         Login login = new Login();
         
