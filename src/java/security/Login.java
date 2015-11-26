@@ -69,7 +69,7 @@ public class Login {
     String rolesAsString =  res.length() > 0 ? res.substring(0, res.length() - 1): "";
     
     
-     String issuer = "semester3demo-cphbusiness.dk-computerScience";
+    String issuer = "semester3demo-cphbusiness.dk-computerScience";
     JWSSigner signer = new MACSigner(Secrets.ADMIN.getBytes());
     
     JWTClaimsSet claimsSet = new JWTClaimsSet();
