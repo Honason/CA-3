@@ -10,6 +10,7 @@ angular.module('myApp', [
   'myApp.view2',
   'myApp.view3',
   'myApp.view4',
+  'myApp.register',
   'myApp.filters',
   'myApp.directives',
   'myApp.factories',
@@ -21,5 +22,3 @@ config(['$routeProvider', function($routeProvider) {
 config(function ($httpProvider) {
    $httpProvider.interceptors.push('authInterceptor');
 });
-
-

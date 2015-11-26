@@ -21,7 +21,7 @@ public class User implements Serializable {
   @Id
   private String userName;
   
-  @ManyToMany(cascade = CascadeType.ALL)
+  @ManyToMany(cascade = CascadeType.MERGE)
   @JoinTable(name = "SystemUser_USERROLE", joinColumns = {
   @JoinColumn(name = "userName", referencedColumnName = "userName")}, inverseJoinColumns = {
   @JoinColumn(name = "roleName")})

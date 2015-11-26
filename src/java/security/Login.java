@@ -31,17 +31,15 @@ public class Login {
   @Produces(MediaType.APPLICATION_JSON)
   public String gt(){
     return "{\"txt\" : \"TEST\"}";
-    
   }
-  
 
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
   @Produces(MediaType.APPLICATION_JSON)
   public Response login(String jsonString) throws JOSEException {
     JsonObject json = new JsonParser().parse(jsonString).getAsJsonObject();
-    String username =  json.get("username").getAsString(); 
-    String password =  json.get("password").getAsString();
+    String username = json.get("username").getAsString(); 
+    String password = json.get("password").getAsString();
     JsonObject responseJson = new JsonObject();
     List<String> roles;  
     
@@ -54,7 +52,7 @@ public class Login {
     throw new NotAuthorizedException("Ilegal username or password",Response.Status.UNAUTHORIZED);
   }
   
-  private List<String>  authenticate(String userName, String password){
+  private List<String> authenticate(String userName, String password){
     UserFacade facade = new UserFacade();
      List<String>  roles = facade.authenticateUser(userName, password);
      return roles;
@@ -67,7 +65,6 @@ public class Login {
         res.append(",");
     }
     String rolesAsString =  res.length() > 0 ? res.substring(0, res.length() - 1): "";
-    
     
     String issuer = "semester3demo-cphbusiness.dk-computerScience";
     JWSSigner signer = new MACSigner(Secrets.ADMIN.getBytes());

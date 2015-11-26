@@ -6,12 +6,12 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>My AngularJS App</title>
+    <title>CA 3</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">   
-    <link rel="stylesheet" href="app/app.css">   
-     
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="app/app.css">
+
     <!-- In production use:
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/x.x.x/angular.min.js"></script>
     -->
@@ -24,14 +24,13 @@
     <script src="app/view2/view2.js"></script>
     <script src="app/view3/view3.js"></script>
     <script src="app/view4/view4.js"></script>
+    <script src="app/register/register.js"></script>
     <script src="app/components/authentication.js"></script>
     <script src="app/components/filters.js"></script>
     <script src="app/components/directives.js"></script>
     <script src="app/components/factories.js"></script>
     <script src="app/components/services.js"></script>
-    
-    
-    
+
   </head>
   <body ng-app="myApp">
 
@@ -53,23 +52,20 @@
               <li><a href="#/view2">Page for Users</a></li>
               <li><a href="#/view3">Page for Admins</a></li>
               <li><a href="#/view4">Using the Seed</a></li>
+              <li><a href="#/register">Register</a></li>
             </ul>
             <div>
             <form class="navbar-form navbar-right" role="form" ng-show="!isAuthenticated" ng-submit="login()"  >
               <div class="form-group">
-                <input type="text" style="width:10em;" placeholder="User name" class="form-control"
-                       ng-model="user.username">
+                <input type="text" style="width:10em;" placeholder="User name" class="form-control" ng-model="user.username">
               </div>
               <div class="form-group">
-                <input type="password" style="width:10em;" placeholder="Password" class="form-control"
-                       ng-model="user.password">
+                <input type="password" style="width:10em;" placeholder="Password" class="form-control" ng-model="user.password">
               </div>
               <button type="submit" class="btn btn-success">Sign in</button>
             </form>
             <div class="navbar-right" ng-show="isAuthenticated">
-              
               <p class="navbar-text">Logged on as: {{username}}</p>
-
               <button type="submit" class="btn btn-primary navbar-btn"  ng-click="logout()">Logout
               </button>
             </div>
@@ -77,7 +73,7 @@
           </div>
         </div>
       </nav>
-     
+
       <div class="container">
         <div style="margin-top: 60px;">
           <hr style="background: lightblue; border:0; height:7px" />
@@ -87,7 +83,7 @@
       </div>
     </div>
 
-   
-  
+
+
   </body>
 </html>

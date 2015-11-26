@@ -109,7 +109,7 @@ angular.module('myApp.security', [])
           return rejection;
         }
        $rootScope.error = err.error.code +": ";
-        
+
         if (err.error.code === 401) {
           $rootScope.error += " You are are not Authenticated - did you log on to the system";
         }
@@ -117,18 +117,10 @@ angular.module('myApp.security', [])
            $rootScope.error +=  err.error.message;
         }
         if (err.error.code === 403) {
-         
+
         }
-       
+
         return $q.reject(rejection);
       }
     };
   });
-
-
-
-
-
-
-
-
