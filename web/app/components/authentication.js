@@ -1,5 +1,7 @@
 angular.module('myApp.security', [])
-.controller('AppLoginCtrl', function ($scope, $rootScope, $http, $window, $location) {
+.controller('AppLoginCtrl', function ($scope, $rootScope, $http, $window, $location, loginService) {
+
+  $scope.loginService = loginService;
 
   function url_base64_decode(str) {
     var output = str.replace('-', '+').replace('_', '/');
@@ -29,11 +31,11 @@ angular.module('myApp.security', [])
   };
 
 
-  $scope.username = "";
-  $scope.isAuthenticated = false;
-  $scope.isAdmin = false;
-  $scope.isUser = false;
-  $scope.message = '';
+  // $scope.username = "";
+  // $scope.isAuthenticated = false;
+  // $scope.isAdmin = false;
+  // $scope.isUser = false;
+  // $scope.message = '';
   $scope.error = null;
 
   $scope.login = function () {
@@ -41,17 +43,18 @@ angular.module('myApp.security', [])
             .post('api/login', $scope.user)
             .success(function (data, status, headers, config) {
               $window.sessionStorage.token = data.token;
-              $scope.isAuthenticated = true;
+              console.log("Setting authenticated");
+              loginService.isAuthenticated = true;
               var encodedProfile = data.token.split('.')[1];
               var profile = JSON.parse(url_base64_decode(encodedProfile));
-              $scope.username = profile.username;
+              loginService.username = profile.username;
               var roles = profile.roles.split(",");
               roles.forEach(function (role) {
                 if(role === "Admin"){
-                   $scope.isAdmin =true;
+                   loginService.isAdmin =true;
                  }
                 if(role === "User"){
-                   $scope.isUser = true;
+                   loginService.isUser = true;
                  }
               });
               $scope.error = null;
@@ -60,19 +63,19 @@ angular.module('myApp.security', [])
             .error(function (data, status, headers, config) {
               // Erase the token if the user fails to log in
               delete $window.sessionStorage.token;
-              $scope.isAuthenticated = false;
-              $scope.isAdmin = false;
-              $scope.isUser = false;
-              $scope.username = "";
+              loginService.isAuthenticated = false;
+              loginService.isAdmin = false;
+              loginService.isUser = false;
+              loginService.username = "";
               $scope.error = data.error;
               //$scope.logout();  //Clears an eventual error message from timeout on the inner view
             });
   };
 
   $rootScope.logout = function () {
-    $scope.isAuthenticated = false;
-    $scope.isAdmin = false;
-    $scope.isUser = false;
+    loginService.isAuthenticated = false;
+    loginService.isAdmin = false;
+    loginService.isUser = false;
     delete $window.sessionStorage.token;
     $location.path("#/view1");
   };
@@ -81,12 +84,12 @@ angular.module('myApp.security', [])
   var init = function () {
     var token = $window.sessionStorage.token;
     if (token) {
-      $scope.isAuthenticated = true;
+      loginService.isAuthenticated = true;
       var encodedProfile = token.split('.')[1];
       var profile = JSON.parse(url_base64_decode(encodedProfile));
-      $scope.username = profile.username;
-      $scope.isAdmin = profile.role === "Admin";
-      $scope.isUser = !$scope.isAdmin;
+      loginService.username = profile.username;
+      loginService.isAdmin = profile.role === "Admin";
+      loginService.isUser = !loginService.isAdmin;
       $scope.error = null;
     }
   };
@@ -109,7 +112,7 @@ angular.module('myApp.security', [])
           return rejection;
         }
        $rootScope.error = err.error.code +": ";
-        
+
         if (err.error.code === 401) {
           $rootScope.error += " You are are not Authenticated - did you log on to the system";
         }
@@ -117,18 +120,10 @@ angular.module('myApp.security', [])
            $rootScope.error +=  err.error.message;
         }
         if (err.error.code === 403) {
-         
+
         }
-       
+
         return $q.reject(rejection);
       }
     };
   });
-
-
-
-
-
-
-
-
