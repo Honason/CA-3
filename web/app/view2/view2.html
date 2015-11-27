@@ -1,4 +1,29 @@
-<p>This is the partial for view 2.</p>
-<div>
-  <p>Data from server (Users ONLY) <b style="color: darkblue">{{data}}</b></p>
+<table class="table">
+    
+    <tr>
+        <th style="text-align: center;"> Currency </th>
+        <th style="text-align: center;"> Rate </th>
+    </tr>
+    <tr ng-repeat="(key, value) in data"> 
+        <td style="text-align: center;"><a ng-click="toCurrency = key"> {{ key }} </a></td>
+        <td style="text-align: center;"> {{ value }} </td>
+    </tr>
+    
+</table>
+
+
+<div class="calculatorContainer" ng-app="myApp.view" ng-controller="View2Ctrl">
+    
+     <input id="value" type="number" ng-model="val"/> 
+    
+    <select id="left" class="form-control" ng-model="fromCurrency"> 
+        <option ng-repeat="(key, value) in data" value=" {{ value }} ">{{ key }}</option>
+    </select>
+    <label id="unicode"> &rarr; </label>
+      <select id="right" class="form-control" ng-model="toCurrency" > 
+        <option ng-repeat="(key, value) in data" value="{{ value }}">{{ key }}</option>
+    </select>
+    
+    <label id="result" ng-show="val > 0"> {{ val | currencyConverter: toCurrency: fromCurrency }}</label>
+
 </div>
