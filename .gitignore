@@ -1,1 +1,10 @@
 build/
+.class
+.war
+persistence.xml
+build.xml
+build.properties
+pom.xml
+dist/
+web/WEB-INF/
+build.xml
