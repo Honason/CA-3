@@ -1,4 +1,10 @@
 build/
-src/conf/persistence.xml
-
-*.war
+.class
+.war
+persistence.xml
+build.xml
+build.properties
+pom.xml
+dist/
+web/WEB-INF/
+build.xml

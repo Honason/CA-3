@@ -1,71 +1,158 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!-- You may freely edit this file. See commented blocks below for -->
-<!-- some examples of how to customize the build. -->
-<!-- (If you delete it and reopen the project it will be recreated.) -->
-<!-- By default, only the Clean and Build commands use this build script. -->
-<!-- Commands such as Run, Debug, and Test only use this build script if -->
-<!-- the Compile on Save feature is turned off for the project. -->
-<!-- You can turn off the Compile on Save (or Deploy on Save) setting -->
-<!-- in the project's Project Properties dialog box.-->
-<project name="semesterSeedSP" default="default" basedir=".">
-    <description>Builds, tests, and runs the project semesterSeedSP.</description>
-    <import file="nbproject/build-impl.xml"/>
-    <!--
+<?xml version="1.0"?>
 
-    There exist several targets which are by default empty and which can be 
-    used for execution of your tasks. These targets are usually executed 
-    before and after some main targets. They are: 
+<project name="CA3" basedir="." default="usage">
+	<property file="build.properties"/>
+	<property name="src.dir" value="src/java"/>
+	<property name="web.dir" value="web"/>
+	<property name="javadoc.dir" value="doc"/>
+	<property name="build.dir" value="${web.dir}/WEB-INF/classes"/>
+	<property name="name" value="CA3"/>
 
-      -pre-init:                 called before initialization of project properties 
-      -post-init:                called after initialization of project properties 
-      -pre-compile:              called before javac compilation 
-      -post-compile:             called after javac compilation 
-      -pre-compile-single:       called before javac compilation of single file
-      -post-compile-single:      called after javac compilation of single file
-      -pre-compile-test:         called before javac compilation of JUnit tests
-      -post-compile-test:        called after javac compilation of JUnit tests
-      -pre-compile-test-single:  called before javac compilation of single JUnit test
-      -post-compile-test-single: called after javac compilation of single JUunit test
-      -pre-dist:                 called before archive building 
-      -post-dist:                called after archive building 
-      -post-clean:               called after cleaning build products 
-      -pre-run-deploy:           called before deploying
-      -post-run-deploy:          called after deploying
+	<path id="master-classpath">
+		<fileset dir="lib">
+			<include name="**/*.jar"/>
+		</fileset>
+		<pathelement path="${build.dir}"/>
+	</path>
 
-    Example of pluging an obfuscator after the compilation could look like 
+	<target name="javadoc">
+		<javadoc packagenames="*" sourcepath="${src.dir}" destdir="doc" version="true" windowtitle="Fax Application">
 
-        <target name="-post-compile">
-            <obfuscate>
-                <fileset dir="${build.classes.dir}"/>
-            </obfuscate>
-        </target>
+			<doctitle><![CDATA[<h1>= DGS 2.0 = </h1>]]></doctitle>
+			<bottom><![CDATA[Copyright © 2015. All Rights Reserved.]]></bottom>
+			<group title="entities packages" packages="Entities.*"/>
+			<group title="facades packages" packages="Facades.*"/>
+			<group title="rest packages" packages="rest.*"/>
+			<group title="generator packages" packages="generator.*"/>
 
-    For list of available properties check the imported 
-    nbproject/build-impl.xml file. 
+		</javadoc>
+	</target>
+
+	<target name="usage">
+		<echo message=""/>
+		<echo message="${name} build file"/>
+		<echo message="-----------------------------------"/>
+		<echo message=""/>
+		<echo message="Available targets are:"/>
+		<echo message=""/>
+		<echo message="deploy    --> Deploy application as directory"/>
+		<echo message="deploywar --> Deploy application as a WAR file"/>
+		<echo message=""/>
+	</target>
 
 
-    Other way how to customize the build is by overriding existing main targets.
-    The target of interest are: 
+	<target name="build" description="Compile main source tree java files">
+		<mkdir dir="${build.dir}"/>
+		<copy todir="${web.dir}/WEB-INF/lib" flatten="true" includeemptydirs="false" preservelastmodified="true">
+			<fileset dir="lib">
+				<include name="**/*.jar"/>
+			</fileset>
+		</copy>
+		<mkdir dir="${web.dir}/WEB-INF/classes/META-INF"/>
+		<copy todir="${web.dir}/WEB-INF/classes/META-INF" flatten="true" includeemptydirs="false" preservelastmodified="true">
+			<fileset dir="src/conf">
+				<include name="*"/>
+			</fileset>
+		</copy>
 
-      init-macrodef-javac:    defines macro for javac compilation
-      init-macrodef-junit:   defines macro for junit execution
-      init-macrodef-debug:    defines macro for class debugging
-      do-dist:                archive building
-      run:                    execution of project 
-      javadoc-build:          javadoc generation 
+		<javac destdir="${build.dir}" target="1.7" source="1.7" debug="true" deprecation="false" optimize="false" failonerror="true">
+			<src path="${src.dir}"/>
+			<classpath refid="master-classpath"/>
+		</javac>
+	</target>
 
-    Example of overriding the target for project execution could look like 
 
-        <target name="run" depends="<PROJNAME>-impl.jar">
-            <exec dir="bin" executable="launcher.exe">
-                <arg file="${dist.jar}"/>
-            </exec>
-        </target>
+	<target name="deploy" depends="build" description="Deploy application">
+		<copy todir="${deploy.path}/${name}" preservelastmodified="true">
+			<fileset dir="${web.dir}">
+				<include name="**/*.*"/>
+			</fileset>
+		</copy>
+	</target>
 
-    Notice that overridden target depends on jar target and not only on 
-    compile target as regular run target does. Again, for list of available 
-    properties which you can use check the target you are overriding in 
-    nbproject/build-impl.xml file. 
 
-    -->
-</project>
+	<target name="deploywar" depends="build" description="Deploy application as a WAR file">
+		<war destfile="dist/openshiftsuckdick/webapps/${name}.war" needxmlfile="false">
+			<fileset dir="${web.dir}">
+				<include name="**/*.*"/>
+			</fileset>
+		</war>
+
+		<copy todir="${deploy.path}">
+			<fileset dir=".">
+				<include name="*.war"/>
+			</fileset>
+		</copy>
+		<exec executable="git" dir="dist/openshiftsuckdick" failonerror="true">
+			<arg line="add ."/>
+		</exec>
+		<exec executable="git" dir="dist/openshiftsuckdick" failonerror="true">
+			<arg line="commit -m &quot;ayy&quot; "/>
+		</exec>
+		<exec executable="git" dir="dist/openshiftsuckdick" failonerror="true">
+			<arg line="push"/>
+		</exec>
+	</target>
+
+
+	<target name="clean" description="Clean output directories">
+		<delete>
+			<fileset dir="${build.dir}">
+				<include name="**/*.class"/>
+			</fileset>
+		</delete>
+	</target>
+
+	<!-- ============================================================ -->
+	<!-- Tomcat tasks -->
+	<!-- ============================================================ -->
+
+	<path id="catalina-ant-classpath">
+		<!-- We need the Catalina jars for Tomcat -->
+		<!--  * for other app servers - check the docs -->
+		<fileset dir="${appserver.lib}">
+			<include name="catalina-ant.jar"/>
+			<include name="tomcat-coyote.jar"/>
+			<include name="tomcat-util.jar"/>
+			<include name="tomcat-juli.jar"/>
+		</fileset>
+	</path>
+
+	<taskdef name="install" classname="org.apache.catalina.ant.DeployTask">
+		<classpath refid="catalina-ant-classpath"/>
+	</taskdef>
+	<taskdef name="reload" classname="org.apache.catalina.ant.ReloadTask">
+		<classpath refid="catalina-ant-classpath"/>
+	</taskdef>
+	<taskdef name="list" classname="org.apache.catalina.ant.ListTask">
+		<classpath refid="catalina-ant-classpath"/>
+	</taskdef>
+	<taskdef name="start" classname="org.apache.catalina.ant.StartTask">
+		<classpath refid="catalina-ant-classpath"/>
+	</taskdef>
+	<taskdef name="stop" classname="org.apache.catalina.ant.StopTask">
+		<classpath refid="catalina-ant-classpath"/>
+	</taskdef>
+
+	  <target name="tomcat-start">
+    <java classname="org.apache.catalina.startup.Bootstrap" fork="true">
+      <classpath path="${appserver.home}/bin/bootstrap.jar:${appserver.home}/bin/tomcat-juli.jar" />
+      <jvmarg value="-Dcatalina.home=${appserver.home}"/>
+            <!--If you are getting any OutOfMemoryError, remove the comments 
+            and enable jvm argument of the following line-->
+            <!--jvmarg value="-XX:MaxPermSize=256m"/-->
+        </java>
+    </target>
+
+    <target name="tomcat-stop">
+      <java classname="org.apache.catalina.startup.Bootstrap" fork="true">
+        <classpath path="${appserver.home}/bin/bootstrap.jar:${appserver.home}/bin/tomcat-juli.jar" />
+        <jvmarg value="-Dcatalina.home=${appserver.home}"/>
+        <arg line="stop"/>
+      </java>
+    </target>
+
+	<target name="reload" description="Reload application in Tomcat">
+		<reload url="${tomcat.manager.url}" username="${tomcat.manager.username}" password="${tomcat.manager.password}" path="/${name}"/>
+		</target>
+	</project>

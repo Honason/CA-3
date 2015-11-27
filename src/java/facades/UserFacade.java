@@ -18,6 +18,8 @@ public class UserFacade {
 
   public UserFacade() {
    
+
+   
   }
 
   public User getUserByUserId(String id) {
