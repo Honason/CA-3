@@ -30,7 +30,8 @@ public class Currency {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/calculator")
     public String calculator() {
-        return exchange.getBank();
+        return exchange.getTodaysRates();
+        // return exchange.getBank();
         // return exchange.getCache();
     }
     

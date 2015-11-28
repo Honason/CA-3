@@ -8,3 +8,4 @@ pom.xml
 dist/
 web/WEB-INF/
 build.xml
+output/

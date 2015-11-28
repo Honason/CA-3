@@ -36,16 +36,20 @@ public class ExchangeFacade {
 
 
 	public String getTodaysRates() {
-		EntityManager em = emf.createEntityManager();
-		List<Rate> rates;
-		try {
-			Query q = em.createQuery("select R from Rate R where R.date = " + Util.getDate());
-			rates = q.getResultList();
-		} finally {
-			em.close();
-		}
 
-		return new Gson().toJson(rates);
+
+		// EntityManager em = emf.createEntityManager();
+		// List<Rate> rates;
+		// try {
+		// 	Query q = em.createQuery("select R from Rate R where R.date = " + Util.getDate());
+		// 	rates = q.getResultList();
+		// } finally {
+		// 	em.close();
+		// }
+
+		// return new Gson().toJson(rates);
+
+		return cacheJSON;
 	}
 
 	public void getBank() {
@@ -68,23 +72,13 @@ public class ExchangeFacade {
 			em.persist(rate);
 		}
 		em.getTransaction().commit();
+
+		cacheRates(rates);
 	}
 
 
 	// Call this method every 24 hours along with daily rates
-	public void cacheRates() {
-		EntityManager em = emf.createEntityManager();
-
-		List<Rate> rates;
-
-		try {
-			Query q = em.createQuery("select R from Rate R where R.date = (select max(R.date) from Rate R)");
-			rates = q.getResultList();
-		} finally {
-			em.close();
-		}
-
-		// Resetting cache to clear yesterdays rates
+	public void cacheRates(ArrayList<Rate> rates) {
 		cache = new HashMap<>();
 
 		if (rates != null) {
