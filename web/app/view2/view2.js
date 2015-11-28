@@ -39,10 +39,6 @@ angular.module('myApp.view2', ['ngRoute'])
                  return false;
 
             };
-
-          //  console.log(Object.keys($scope.data)[0]);
-          //  $scope.fromCurrency =Object.keys($scope.data)[0];
-
         }).filter('currencyConverter', function() {
       return function(input, toCurrency, fromCurrency) {
           var relationship = fromCurrency / toCurrency;

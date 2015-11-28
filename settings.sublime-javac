@@ -1,0 +1,11 @@
+{
+    "project_name"      : "HelloWorld",
+    "output_dir"  : "output",
+    "sources_dir" : "test",
+    "resources"   : ["lib\restassured\rest-assured-2.6.0.jar"],
+    "libs"        : [],
+    "encoding"    : "utf-8",
+
+    "entry_file"        : "Test/BackendTest.java",
+    "entry_point"       : "Test.BackendTest"
+}

@@ -9,3 +9,4 @@ dist/
 web/WEB-INF/
 build.xml
 lib/junit_4/junit-4.10.jar
+output/
