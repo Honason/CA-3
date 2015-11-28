@@ -54,16 +54,19 @@ public class ExchangeFacade {
 
 	public void getBank() {
 		EntityManager em = emf.createEntityManager();
-		int res = 0;
+		List<Rate> rates = new ArrayList<Rate>();
 		try {
 			Query q = em.createQuery("select R from Rate R where R.date = " + Util.getDate());
-			res = q.getResultList().size();
+			rates = q.getResultList();
 		} catch (Exception e) {}
-		System.out.println("Count of todays rates: " + res);
-		if(res > 0)
+		System.out.println("Count of todays rates: " + rates.size());
+
+		if(cacheJSON == null || cacheJSON == "")
+			cacheRates(rates);
+		if(rates.size() > 0)
 			return;
 		
-		ArrayList<Rate> rates = new Bank().getRates();
+		rates = new Bank().getRates();
 
 
 		em.getTransaction().begin();
@@ -78,7 +81,7 @@ public class ExchangeFacade {
 
 
 	// Call this method every 24 hours along with daily rates
-	public void cacheRates(ArrayList<Rate> rates) {
+	public void cacheRates(List<Rate> rates) {
 		cache = new HashMap<>();
 
 		if (rates != null) {

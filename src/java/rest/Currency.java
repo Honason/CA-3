@@ -19,6 +19,12 @@ public class Currency {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
+    public String s() {
+        return "ayy";
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
     @Path("/dailyrates")
     public String dailyRates() {
         return exchange.getTodaysRates();
