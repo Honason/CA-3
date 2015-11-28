@@ -1,0 +1,68 @@
+<style media="screen">
+  img {
+    margin: 20px 0px;
+  }
+</style>
+<div>
+  <div class="page-header">
+    <h1>Documentation</h1>
+  </div>
+
+  <div class="row">
+    <div class="col-md-8">
+      <div class="page-header">
+        <h2>Testing</h2>
+      </div>
+
+      <h3>Frontend testing</h3>
+
+      <h3>Backend Unit testing</h3>
+
+      <h3>Manual API testing</h3>
+      <p>
+        To simplify the process and save time, we have decided to conduct the simple API testing of register
+        functionality in Postman application. We have selected four test cases to ensure that system behaves as it should.
+      </p>
+      <p>
+        Register API path expects json object as a parameter in body, which contains username and password values. In first test,
+        we wont set this object. Instead, we will do empty POST request to api register path. Server returns 400 (bad request) error,
+        and information about the error.
+      </p>
+      <img src="app/images/empty_request.png" />
+      <p>
+        In second test, we will try to send just on of the username-password pair. The server should return the same http 400 status,
+        with message "Incomplete request".
+      </p>
+      <img src="app/images/incomplete_request.png"/>
+      <p>
+        In third test, we will pass valid object with both username and password, but with username that is already registered.
+        Expected result is again status 400, and message "User already exist".
+      </p>
+      <img src="app/images/user_exist_request.png"/>
+      <p>
+        The fourth and last test case passes valid object with username and password, with username that doesn't exist in our database.
+        Expected response is OK status 200, and same json response object as login path. Username and token.
+      </p>
+      <img src="app/images/ideal_request.png"/>
+
+
+
+      <div class="page-header">
+        <h2>Who did what</h2>
+      </div>
+      <h4>Jan</h4>
+      <p>
+        Project setup, database and persistence setup, Register functionality (frontend + backend + testing), Openshift deployment, section 2 (Using Open Data, Angular)
+      </p>
+      <h4>Andreas</h4>
+      <p>
+        Ruined everything with GIT conflicts.
+      </p>
+      <h4>Lasse</h4>
+      <p>
+        
+      </p>
+    </div>
+  </div>
+
+</div>

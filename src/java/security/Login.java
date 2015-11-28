@@ -54,7 +54,7 @@ public class Login {
   
   private List<String> authenticate(String userName, String password){
     UserFacade facade = new UserFacade();
-     List<String>  roles = facade.authenticateUser(userName, password);
+     List<String> roles = facade.authenticateUser(userName, password);
      return roles;
   }
 

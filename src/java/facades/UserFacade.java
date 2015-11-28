@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.Query;
 import security.PasswordHash;
 
 public class UserFacade {
@@ -20,6 +21,16 @@ public class UserFacade {
    
 
    
+  }
+  
+  public boolean userExist(String username) {
+      EntityManager em = emf.createEntityManager();
+    try {
+      Query q = em.createQuery("select u from User u where u.userName = :username");
+      return q.setParameter("username", username).getResultList().size() > 0;
+    } finally {
+      em.close();
+    }
   }
 
   public User getUserByUserId(String id) {

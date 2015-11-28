@@ -11,11 +11,18 @@ angular.module('myApp.view2', ['ngRoute'])
 
         .controller('View2Ctrl', function ($http, $scope, $window, $timeout) {
 
+          $scope.fromCurrency = "100";
+          $scope.toCurrency = "100";
+
             // CACHE STORE::::::::::::
             try {
                 var cache = JSON.parse($window.sessionStorage.cache);
                 console.log("Receiving our cache: " + cache);
                 $scope.data = cache;
+
+                $scope.fromCurrency = $scope.data.DKK + "";
+                $scope.toCurrency = $scope.data.CZK + "";
+                console.log($scope.data);
             } catch (err) {
                 $http({
                     method: 'GET',
@@ -23,6 +30,10 @@ angular.module('myApp.view2', ['ngRoute'])
                 }).then(function successCallback(res) {
                     console.log('Storing our cache: ' + JSON.stringify(res.data));
                     $scope.data = res.data;
+
+                    $scope.fromCurrency = $scope.data.DKK + "";
+                    $scope.toCurrency = $scope.data.CZK + "";
+
                     $window.sessionStorage.cache = JSON.stringify(res.data);
                 }, function errorCallback(res) {
                     $scope.error = res.status + ": " + res.data.statusText;
