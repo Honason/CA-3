@@ -31,7 +31,11 @@ public class DeploymentConfiguration implements ServletContextListener {
 
   @Override
   public void contextInitialized(ServletContextEvent sce) {
-
+    Map<String, String> env = System.getenv();
+    //If we are running in the OPENSHIFT environment change the pu-name 
+    if (env.keySet().contains("OPENSHIFT_MYSQL_DB_HOST")) {
+      PU_NAME = "PU_OPENSHIFT";
+    }
     // Start daily rate fetching
     ExchangeFacade.getInstance().getBank();
 
@@ -45,11 +49,7 @@ public class DeploymentConfiguration implements ServletContextListener {
       }
     }, timeToMidnight / 1000 / 60, 60*24, TimeUnit.MINUTES);
 
-    Map<String, String> env = System.getenv();
-    //If we are running in the OPENSHIFT environment change the pu-name 
-    if (env.keySet().contains("OPENSHIFT_MYSQL_DB_HOST")) {
-      PU_NAME = "PU_OPENSHIFT";
-    }
+
     /*try {
       ServletContext context = sce.getServletContext();
       EntityManagerFactory emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);

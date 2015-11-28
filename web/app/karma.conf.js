@@ -8,7 +8,7 @@ module.exports = function(config){
     'https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0rc1/angular-route.min.js',
     'http://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular-mocks.js',
     'bower_components/angular-bootstrap/ui-bootstrap.js',
-    'bower_components/angular-animate/angular-animate.js',
+    'http://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-animate.js',
     'components/*.js',
     'view1/*.js',
     'view2/*.js',
@@ -16,6 +16,7 @@ module.exports = function(config){
     'view4/*.js',
     'opendata/*.js',
     'register/*.js',
+    'documentation/*.js',
     'app.js',
     'test/*.js'
     ],

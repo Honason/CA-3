@@ -10,11 +10,31 @@
 
   <div class="row">
     <div class="col-md-8">
+      <a href="https://github.com/Honason/CA-3/">Github Repo</a>
       <div class="page-header">
         <h2>Testing</h2>
       </div>
 
       <h3>Frontend testing</h3>
+
+      <img src="app/images/frontend-test.png"/>
+      <p>We have used Karma combined with Jasmine to create automated testing of our frontend functions. We found that an application of this scale that tests were mostly a waste of time since we could easily test manually. The right time to construct these tests would be right before starting to code the application itself so that we could test our code against the test instead of testing the test against the code. </p>
+      <p>There were not a lot of frontend functionality, most importantly was that the calculator converted correctly and the login system handled tokens without fault.</p>
+
+      <p>Tests:</p>
+      <ul>
+        <li><strong>CVRAPI</strong></li>
+        <li>No input in the search query</li>
+        <li>Correct data allocation when returned from api</li>
+
+        <li><strong>Login</strong></li>
+        <li>Logout button deleting token from browser</li>
+
+        <li><strong>Calculator</strong></li>
+        <li>Correctly convert between currencies</li>
+        <li>Only show 2 decimals</li>
+      </ul>
+      
 
       <h3>Backend Unit testing</h3>
 
@@ -62,7 +82,8 @@
       </p>
       <h4>Andreas</h4>
       <p>
-        Ruined everything with GIT conflicts.
+        <strong>Saved the day with his amazing deployment skills</strong><small>fk openshift</small>
+        Bank xml fetching and data transforming, scheduler, frontend testing, superior ant build file.
       </p>
       <h4>Lasse</h4>
       <p>
