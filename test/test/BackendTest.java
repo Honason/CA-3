@@ -5,10 +5,10 @@
  */
 package test;
 
-import static com.jayway.restassured.RestAssured;
-// import static com.jayway.restassured.RestAssured.baseURI;
-// import static com.jayway.restassured.RestAssured.defaultParser;
-// import static com.jayway.restassured.RestAssured.given;
+import static com.jayway.restassured.RestAssured.basePath;
+ import static com.jayway.restassured.RestAssured.baseURI;
+ import static com.jayway.restassured.RestAssured.defaultParser;
+ import static com.jayway.restassured.RestAssured.given;
 import com.jayway.restassured.parsing.Parser;
 import static com.jayway.restassured.path.json.JsonPath.from;
 import org.eclipse.jetty.server.Server;
