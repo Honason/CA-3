@@ -8,7 +8,7 @@
    <context-param>
         <description>If true,the test users "user", "admin" and "user_admin" is created all with password "test"</description>
         <param-name>makeTestUsers</param-name>
-        <param-value>true</param-value>
+        <param-value>false</param-value>
     </context-param>
     <session-config>
         <session-timeout>

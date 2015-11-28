@@ -9,6 +9,7 @@ angular.module('myApp', [
   'myApp.view1',
   'myApp.opendata',
   'myApp.view3',
+  'myApp.view2',
   'myApp.view4',
   'myApp.register',
   'myApp.filters',
