@@ -7,7 +7,11 @@ angular.module('myApp.view2', ['ngRoute'])
               templateUrl: 'app/view2/view2.html',
               controller: 'View2Ctrl'
             });
-          }])
+          }]).filter('currencyConverter', function() {
+            return function(input, toCurrency, fromCurrency) {
+              return (input * (fromCurrency / toCurrency)).toFixed(2);
+            };
+          })
 
         .controller('View2Ctrl', function ($http, $scope, $window, $timeout) {
 
@@ -50,12 +54,7 @@ angular.module('myApp.view2', ['ngRoute'])
                  return false;
 
             };
-        }).filter('currencyConverter', function() {
-      return function(input, toCurrency, fromCurrency) {
-          var relationship = fromCurrency / toCurrency;
-          return round2Fixed(input * relationship);
-      };
-  });
+        })
 
 function round2Fixed(value) {
   value = +value;
