@@ -7,23 +7,23 @@ import javax.persistence.CascadeType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
 
 @Entity
-public class Currency implements Serializable {
-
-
+public class Rate {
   @Id
   public String currency;
   @Id
-  public int date;
+  public long date;
   public Double rate;
 
 
-  public Currency() {
+  public Rate(String c, long d, Double r) {
+    currency = c;
+    date = d;
+    rate = r;
+  } 
+
+  public Rate() {
   } 
  
           

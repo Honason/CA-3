@@ -6,65 +6,105 @@ import deploy.DeploymentConfiguration;
 import entity.Rate;
 import java.util.HashMap;
 import java.util.List;
+import java.util.ArrayList;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.persistence.Query;
+import services.Bank;
+import services.Util;
 
 public class ExchangeFacade {
 
-    EntityManagerFactory emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
-    HashMap<String, Double> cache;
-    String cacheJSON;
+	EntityManagerFactory emf = Persistence.createEntityManagerFactory(DeploymentConfiguration.PU_NAME);
+	HashMap<String, Double> cache;
+	String cacheJSON;
 
-    // We use singleton to simplify setting/getting the cached version of the daily rates
-    private static ExchangeFacade instance = null;
+	// We use singleton to simplify setting/getting the cached version of the daily rates
+	private static ExchangeFacade instance = null;
 
-    protected ExchangeFacade() {
-        // Exists only to defeat instantiation.
-    }
+	protected ExchangeFacade() {
+		// Exists only to defeat instantiation.
+	}
 
-    public static ExchangeFacade getInstance() {
-        if (instance == null) {
-            instance = new ExchangeFacade();
-        }
-        return instance;
-    }
+	public static ExchangeFacade getInstance() {
+		if (instance == null) {
+			instance = new ExchangeFacade();
+		}
+		return instance;
+	}
 
-    // Call this method every 24 hours along with daily rates
-    public void cacheRates() {
-        EntityManager em = emf.createEntityManager();
 
-        List<Rate> rates;
+	public String getTodaysRates() {
+		EntityManager em = emf.createEntityManager();
+		List<Rate> rates;
+		try {
+			Query q = em.createQuery("select R from Rate R where R.date = " + Util.getDate());
+			rates = q.getResultList();
+		} finally {
+			em.close();
+		}
 
-        try {
-            Query q = em.createQuery("select R from Rate R where R.date = (select max(R.date) from Rate R)");
-            rates = q.getResultList();
-        } finally {
-            em.close();
-        }
+		return new Gson().toJson(rates);
+	}
 
-        // Resetting cache to clear yesterdays rates
-        cache = new HashMap<>();
+	public void getBank() {
+		EntityManager em = emf.createEntityManager();
+		int res = 0;
+		try {
+			Query q = em.createQuery("select R from Rate R where R.date = " + Util.getDate());
+			res = q.getResultList().size();
+		} catch (Exception e) {}
+		System.out.println("Count of todays rates: " + res);
+		if(res > 0)
+			return;
+		
+		ArrayList<Rate> rates = new Bank().getRates();
 
-        if (rates != null) {
-            for (Rate rate : rates) {
-                cache.put(rate.getCurrency(), rate.getRate());
-            }
-            cacheJSON = new Gson().toJson(cache);
-        } else {
-            System.out.println("cache is fukin pooped");
-        }
-    }
 
-    public String getCache() {
-        // Returning placeholder instad of the real cache:
-       HashMap<String, Double> kek = new HashMap<>();
-        kek.put("USD", 704.76);
-                kek.put("DKK", 100.00);
-        System.out.println(new Gson().toJson(kek));
-       return new Gson().toJson(kek);
-       // return cacheJSON;
-    }
+		em.getTransaction().begin();
+		for (Rate rate : rates) {
+			System.out.println(rate.currency);
+			em.persist(rate);
+		}
+		em.getTransaction().commit();
+	}
+
+
+	// Call this method every 24 hours along with daily rates
+	public void cacheRates() {
+		EntityManager em = emf.createEntityManager();
+
+		List<Rate> rates;
+
+		try {
+			Query q = em.createQuery("select R from Rate R where R.date = (select max(R.date) from Rate R)");
+			rates = q.getResultList();
+		} finally {
+			em.close();
+		}
+
+		// Resetting cache to clear yesterdays rates
+		cache = new HashMap<>();
+
+		if (rates != null) {
+			for (Rate rate : rates) {
+				cache.put(rate.currency, rate.rate);
+			}
+			cacheJSON = new Gson().toJson(cache);
+		} else {
+			System.out.println("cache is fukin pooped");
+		}
+	}
+
+	public String getCache() {
+		// Returning placeholder instad of the real cache:
+	   HashMap<String, Double> kek = new HashMap<>();
+		kek.put("USD", 704.76);
+				kek.put("DKK", 100.00);
+		System.out.println(new Gson().toJson(kek));
+	   return new Gson().toJson(kek);
+	   // return cacheJSON;
+	}
 
 }

@@ -16,11 +16,13 @@ public class Currency {
 
     ExchangeFacade exchange = ExchangeFacade.getInstance();
 
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("dailyrates")
+    @Path("/dailyrates")
     public String dailyRates() {
-        return exchange.getCache();
+        return exchange.getTodaysRates();
+        // return "ayy";
     }
     
     // Kinda irrelevant to have two when we do calculator on client side anyway :PPPP remove later
@@ -28,7 +30,8 @@ public class Currency {
     @Produces(MediaType.APPLICATION_JSON)
     @Path("/calculator")
     public String calculator() {
-        return exchange.getCache();
+        return exchange.getBank();
+        // return exchange.getCache();
     }
     
 }
