@@ -1,6 +1,8 @@
 package facades;
 
+import com.google.gson.Gson;
 import deploy.DeploymentConfiguration;
+import entity.Role;
 import entity.User;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
@@ -65,4 +67,44 @@ public class UserFacade {
     
   }
 
+  
+    public String getUsers() {
+        EntityManager em = emf.createEntityManager();
+
+        List<User> users;
+
+        try {
+            Query q = em.createQuery("select U from User u");
+            users = q.getResultList();
+        } finally {
+            em.close();
+        }
+        HashMap<String, String> userMap = new HashMap();
+
+        for (User user : users) {
+            List<Role> roles = user.getRoles();
+            String roleString = "";
+            for (Role role : roles) {
+                roleString += role.getRoleName();
+            }
+
+            userMap.put(user.getUserName(), roleString);
+        }
+
+        return new Gson().toJson(userMap);
+    }
+
+    public void deleteUserByUserId(String id) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            User user = em.find(User.class, id);
+            em.getTransaction().begin();
+            em.remove(user);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
+    }
+  
+  
 }
