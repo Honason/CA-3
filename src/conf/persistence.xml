@@ -4,14 +4,15 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 
     <class>entity.User</class>
+    <class>entity.Rate</class>
     <class>entity.Role</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <!-- REPLACE ALL THIS WITH INFO FOR YOUR OWN DB -->
-      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ca3?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3307/ca3?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="admin"/>
       <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-      <property name="javax.persistence.jdbc.password" value="password"/>
+      <property name="javax.persistence.jdbc.password" value="admin"/>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>
       <property name="eclipselink.canonicalmodel.subpackage" value="development"/>
     </properties>

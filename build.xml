@@ -44,7 +44,7 @@
 	<target name="build" description="Compile main source tree java files">
 		<mkdir dir="${build.dir}"/>
 		<copy todir="${web.dir}/WEB-INF/lib" flatten="true" includeemptydirs="false" preservelastmodified="true">
-			<fileset dir="lib">
+			<fileset dir="jars">
 				<include name="**/*.jar"/>
 			</fileset>
 		</copy>
@@ -55,7 +55,7 @@
 			</fileset>
 		</copy>
 
-		<javac destdir="${build.dir}" target="1.7" source="1.7" debug="true" deprecation="false" optimize="false" failonerror="true">
+		<javac destdir="${build.dir}" target="1.8" source="1.7" debug="true" deprecation="false" optimize="false" failonerror="true">
 			<src path="${src.dir}"/>
 			<classpath refid="master-classpath"/>
 		</javac>
@@ -138,7 +138,7 @@
     <java classname="org.apache.catalina.startup.Bootstrap" fork="true">
       <classpath path="${appserver.home}/bin/bootstrap.jar:${appserver.home}/bin/tomcat-juli.jar" />
       <jvmarg value="-Dcatalina.home=${appserver.home}"/>
-            <!--If you are getting any OutOfMemoryError, remove the comments 
+            <!--If you are getting any OutOfMemoryError, remove the comments
             and enable jvm argument of the following line-->
             <!--jvmarg value="-XX:MaxPermSize=256m"/-->
         </java>

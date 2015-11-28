@@ -65,7 +65,7 @@ public class ExchangeFacade {
 			cacheRates(rates);
 		if(rates.size() > 0)
 			return;
-		
+
 		rates = new Bank().getRates();
 
 
@@ -88,6 +88,7 @@ public class ExchangeFacade {
 			for (Rate rate : rates) {
 				cache.put(rate.currency, rate.rate);
 			}
+			cache.put("DKK",+100.00);
 			cacheJSON = new Gson().toJson(cache);
 		} else {
 			System.out.println("cache is fukin pooped");

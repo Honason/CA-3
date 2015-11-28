@@ -6,9 +6,10 @@
         <group>
             <file>file:/Users/honason/NetBeansProjects/semesterSeedFall2015/semesterSeedSP/src/java/rest/User.java</file>
             <file>file:/Users/honason/NetBeansProjects/semesterSeedFall2015/semesterSeedSP/src/java/deploy/DeploymentConfiguration.java</file>
-            <file>file:/Users/honason/NetBeansProjects/semesterSeedFall2015/semesterSeedSP/src/java/rest/ApplicationConfig.java</file>
             <file>file:/Users/honason/NetBeansProjects/semesterSeedFall2015/semesterSeedSP/src/java/security/Login.java</file>
             <file>file:/Users/honason/NetBeansProjects/semesterSeedFall2015/semesterSeedSP/src/java/rest/Admin.java</file>
+            <file>file:/Users/honason/NetBeansProjects/semesterSeedFall2015/semesterSeedSP/src/java/rest/Currency.java</file>
+            <file>file:/Users/honason/NetBeansProjects/semesterSeedFall2015/semesterSeedSP/src/java/facades/ExchangeFacade.java</file>
             <file>file:/Users/honason/NetBeansProjects/semesterSeedFall2015/semesterSeedSP/src/java/security/Register.java</file>
         </group>
     </open-files>
