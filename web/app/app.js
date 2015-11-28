@@ -7,11 +7,12 @@ angular.module('myApp', [
   'ui.bootstrap',
   'myApp.security',
   'myApp.view1',
-  'myApp.view2',
+  'myApp.opendata',
   'myApp.view3',
   'myApp.view4',
   'myApp.register',
   'myApp.filters',
+  'myApp.controllers',
   'myApp.directives',
   'myApp.factories',
   'myApp.services'

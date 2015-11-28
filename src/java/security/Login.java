@@ -41,7 +41,7 @@ public class Login {
     String username = json.get("username").getAsString(); 
     String password = json.get("password").getAsString();
     JsonObject responseJson = new JsonObject();
-    List<String> roles;  
+    List<String> roles;
     
     if ((roles=authenticate(username, password))!=null) { 
       String token = createToken(username,roles);    

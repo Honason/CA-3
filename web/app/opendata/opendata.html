@@ -1,0 +1,105 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">Find Company Information</h3>
+  </div>
+  <div class="panel-body">
+    <form class="form-horizontal" ng-submit="searchData()">
+      <div class="form-group">
+        <label for="inputEmail3" class="col-sm-2 control-label">Search Text</label>
+        <div class="col-sm-10">
+          <input type="text" class="form-control" id="inputEmail3" ng-model="searchText">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputPassword3" class="col-sm-2 control-label">Options</label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="searchScope">
+            <option value="search">Search All</option>
+            <option value="vat">CVR</option>
+            <option value="name">Name</option>
+            <option value="phone">Phone</option>
+            <option value="produ">Production Units</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="inputPassword3" class="col-sm-2 control-label">Country</label>
+        <div class="col-sm-10">
+          <select class="form-control" ng-model="country">
+            <option value="dk">Denmark</option>
+            <option value="no">Norway</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <button type="submit" class="btn btn-primary">Find</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="row" ng-show="displayNotFound">
+  <div class="alert alert-danger" role="alert">No results found.</div>
+</div>
+
+<div class="row" ng-show="dataLoaded">
+  <div class="col-md-6">
+    <h1>{{data.name}}</h1>
+    <dl class="dl-horizontal">
+      <dt>Address</dt>
+      <dd>{{data.address}}</dd>
+
+      <dt>Zip code</dt>
+      <dd>{{data.zipcode}}</dd>
+
+      <dt>City</dt>
+      <dd>{{data.city}}</dd>
+
+      <dt>Phone</dt>
+      <dd>{{data.phone}}</dd>
+
+      <dt>Email</dt>
+      <dd>{{data.phone}}</dd>
+
+      <dt>Industry description</dt>
+      <dd>{{data.industrydesc}}</dd>
+
+      <dt>Company description</dt>
+      <dd>{{data.companydesc}}</dd>
+    </dl>
+  </div>
+
+  <div class="col-md-6">
+    <div>
+      <uib-accordion close-others="oneAtATime">
+        <uib-accordion-group heading="{{unit.name}}" ng-repeat="unit in data.productionunits">
+          <dl class="dl-horizontal">
+            <dt>Address</dt>
+            <dd>{{unit.address}}</dd>
+
+            <dt>Zip code</dt>
+            <dd>{{unit.zipcode}}</dd>
+
+            <dt>City</dt>
+            <dd>{{unit.city}}</dd>
+
+            <dt>Phone</dt>
+            <dd>{{unit.phone}}</dd>
+
+            <dt>Email</dt>
+            <dd>{{unit.phone}}</dd>
+
+            <dt>Industry description</dt>
+            <dd>{{unit.industrydesc}}</dd>
+
+            <dt>Company description</dt>
+            <dd>{{unit.companydesc}}</dd>
+          </dl>
+        </div>
+        </uib-accordion-group>
+      </uib-accordion>
+    </div>
+  </div>
+</div>

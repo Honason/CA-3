@@ -47,7 +47,7 @@ public class DeploymentConfiguration implements ServletContextListener {
       User user = new User("user", PasswordHash.createHash("test"));
       User admin = new User("admin", PasswordHash.createHash("test"));
       user.AddRole(userRole);
-      admin.AddRole(adminRole);
+      admin.AddRole(adminRole); 
 
       try {
         em.getTransaction().begin();
